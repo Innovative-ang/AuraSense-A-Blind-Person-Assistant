@@ -19,8 +19,17 @@
             --text-sub: #a0aab2;
         }
         
-        body { margin: 0; padding: 0; font-family: 'Segoe UI', sans-serif; background-color: var(--bg-color); color: var(--text-main); display: flex; justify-content: center; height: 100vh; overflow: hidden; transition: background 0.3s; }
-        .app-container { width: 100%; max-width: 400px; height: 100%; display: flex; flex-direction: column; position: relative; background: linear-gradient(180deg, #101820 0%, #05080a 100%); transition: background 0.3s; }
+        body { background-color: transparent !important; }
+        .app-container {
+            /* Yahan hum semi-transparent black use karenge jisse premium glass look aayega */
+            background-color: rgba(11, 17, 22, 0.9) !important; 
+        }
+        #camera-placeholder {
+            /* Is box ko poora transparent kar denge taaki peeche ka camera clear dikhe */
+            background-color: transparent;
+            border: 2px dashed var(--scan-color);
+            box-shadow: inset 0 0 20px rgba(0,0,0,0.8);
+        }
 
         .header { display: flex; align-items: center; padding: 30px 20px 20px; }
         .app-logo { width: 50px; height: 50px; border-radius: 12px; margin-right: 15px; object-fit: cover; box-shadow: 0 4px 10px rgba(0,0,0,0.5); }
@@ -186,9 +195,11 @@
 
     // Modify your describeScene function to use local data instead of fetching from Flask
     function describeScene(isAuto = false) {
-        if (window.speechSynthesis.speaking) return; 
-
+    // FIX: Add safety check for speechSynthesis
+        if (window.speechSynthesis && window.speechSynthesis.speaking) return; 
+        
         if (androidDetections.length === 0) {
+            
             if (!isAuto) speak("I don't see any recognized objects in front of you.");
         } else {
             let description = "Right now, I see " + androidDetections.join(", and ");
@@ -197,26 +208,15 @@
     }
     // --- UI NAVIGATION ---
     function switchTab(tabId) {
-        document.querySelectorAll('.hidden-section, .active-section').forEach(el => {
-            el.classList.remove('active-section');
-            el.classList.add('hidden-section');
-        });
-        document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
-
-        document.getElementById(tabId + '-section').classList.remove('hidden-section');
-        document.getElementById(tabId + '-section').classList.add('active-section');
-        
-        if(document.getElementById('nav-' + tabId)) document.getElementById('nav-' + tabId).classList.add('active');
-
-        // NEW LOGIC: Sirf 'scan' tab par camera dikhao
-        if (tabId === 'scan') {
-            document.body.style.backgroundColor = "transparent";
-            document.querySelector('.app-container').style.background = "transparent";
-        } else {
-            document.body.style.backgroundColor = "#0b1116";
-            document.querySelector('.app-container').style.background = "linear-gradient(180deg, #101820 0%, #05080a 100%)";
-        }
-    }
+    document.querySelectorAll('.hidden-section, .active-section').forEach(el => {
+        el.classList.remove('active-section');
+        el.classList.add('hidden-section');
+    });
+    document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
+    document.getElementById(tabId + '-section').classList.remove('hidden-section');
+    document.getElementById(tabId + '-section').classList.add('active-section');
+    if(document.getElementById('nav-' + tabId)) document.getElementById('nav-' + tabId).classList.add('active');
+}
     // ==================================================
     // NEW: EMERGENCY DETAILS LOGIC
     // ==================================================
