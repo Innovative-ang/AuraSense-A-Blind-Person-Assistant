@@ -1,3 +1,4 @@
+import os
 from flask import Flask, render_template, request, jsonify
 from groq import Groq
 from duckduckgo_search import DDGS
@@ -5,7 +6,7 @@ from duckduckgo_search import DDGS
 app = Flask(__name__)
 
 # GROQ SETUP
-GROQ_API_KEY = "YOUR_GROQ_KEY" # Replace with your actual key securely
+GROQ_API_KEY = os.environ.get("GROQ_API_KEY")
 client = Groq(api_key=GROQ_API_KEY)
 
 # Global variables for settings (Backend state)
