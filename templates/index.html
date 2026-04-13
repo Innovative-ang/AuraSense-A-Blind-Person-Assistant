@@ -471,22 +471,18 @@
         isSpeaking = true;
         if (isListening) { try { recognition.stop(); } catch(e){} }
 
-        // CHECK: Agar Android app mein chal raha hai toh Native Voice use karo
         if (window.AndroidBridge && window.AndroidBridge.speakNative) {
+            // Android App se chal raha hai to Native Voice use hogi
             window.AndroidBridge.speakNative(text);
-            
-            // Android Native takes some time, simulate end event
             setTimeout(() => {
                 isSpeaking = false;
                 setTimeout(() => { try { recognition.start(); } catch(e) {} }, 300);
-            }, text.length * 70); // Rough estimate of speech duration
-            
+            }, text.length * 70); 
         } else {
-            // Agar Laptop/PC ke Chrome par chal raha hai (Purana logic)
+            // PC browser par chal raha hai to purana Chrome wala voice chalega
             const synth = window.speechSynthesis;
             const utterance = new SpeechSynthesisUtterance(text);
             utterance.rate = 1.05; 
-            
             utterance.onend = function() {
                 isSpeaking = false;
                 setTimeout(() => { try { recognition.start(); } catch(e) {} }, 300);
