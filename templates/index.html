@@ -19,12 +19,8 @@
             --text-sub: #a0aab2;
         }
         
-        body { margin: 0; padding: 0; font-family: 'Segoe UI', sans-serif; background-color: transparent !important; /* YAHAN CHANGE HAI */
-              color: var(--text-main); display: flex; justify-content: center; height: 100vh; overflow: hidden; 
-             }
-        .app-container { width: 100%; max-width: 400px; height: 100%; display: flex; flex-direction: column; position: relative; 
-                        background-color: transparent !important; /* YAHAN CHANGE HAI */
-                       }
+        body { margin: 0; padding: 0; font-family: 'Segoe UI', sans-serif; background-color: var(--bg-color); color: var(--text-main); display: flex; justify-content: center; height: 100vh; overflow: hidden; transition: background 0.3s; }
+        .app-container { width: 100%; max-width: 400px; height: 100%; display: flex; flex-direction: column; position: relative; background: linear-gradient(180deg, #101820 0%, #05080a 100%); transition: background 0.3s; }
 
         .header { display: flex; align-items: center; padding: 30px 20px 20px; }
         .app-logo { width: 50px; height: 50px; border-radius: 12px; margin-right: 15px; object-fit: cover; box-shadow: 0 4px 10px rgba(0,0,0,0.5); }
@@ -211,8 +207,16 @@
         document.getElementById(tabId + '-section').classList.add('active-section');
         
         if(document.getElementById('nav-' + tabId)) document.getElementById('nav-' + tabId).classList.add('active');
-    }
 
+        // NEW LOGIC: Sirf 'scan' tab par camera dikhao
+        if (tabId === 'scan') {
+            document.body.style.backgroundColor = "transparent";
+            document.querySelector('.app-container').style.background = "transparent";
+        } else {
+            document.body.style.backgroundColor = "#0b1116";
+            document.querySelector('.app-container').style.background = "linear-gradient(180deg, #101820 0%, #05080a 100%)";
+        }
+    }
     // ==================================================
     // NEW: EMERGENCY DETAILS LOGIC
     // ==================================================
