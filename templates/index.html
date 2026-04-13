@@ -18,9 +18,13 @@
             --text-main: #ffffff;
             --text-sub: #a0aab2;
         }
-
-        body { margin: 0; padding: 0; font-family: 'Segoe UI', sans-serif; background-color: var(--bg-color); color: var(--text-main); display: flex; justify-content: center; height: 100vh; overflow: hidden; }
-        .app-container { width: 100%; max-width: 400px; height: 100%; display: flex; flex-direction: column; position: relative; background: linear-gradient(180deg, #101820 0%, #05080a 100%); }
+        
+        body { margin: 0; padding: 0; font-family: 'Segoe UI', sans-serif; background-color: transparent !important; /* YAHAN CHANGE HAI */
+              color: var(--text-main); display: flex; justify-content: center; height: 100vh; overflow: hidden; 
+             }
+        .app-container { width: 100%; max-width: 400px; height: 100%; display: flex; flex-direction: column; position: relative; 
+                        background-color: transparent !important; /* YAHAN CHANGE HAI */
+                       }
 
         .header { display: flex; align-items: center; padding: 30px 20px 20px; }
         .app-logo { width: 50px; height: 50px; border-radius: 12px; margin-right: 15px; object-fit: cover; box-shadow: 0 4px 10px rgba(0,0,0,0.5); }
